@@ -12,7 +12,12 @@ const loginValidation = joi.object({
   image: joi.string(),
  });
 
+ const nameValidation = joi.object({
+  name: joi.string().required(),
+ });
+
 module.exports = {
   loginValidation,
   userValidation,
+  nameValidation,
 };
