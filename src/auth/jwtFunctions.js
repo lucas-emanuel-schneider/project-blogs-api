@@ -17,7 +17,7 @@ const verifyToken = (authorization) => {
     const payload = jwt.verify(authorization, secret);
     return { type: null, message: payload };
   } catch (error) {
-    return { type: 'error', message: error };
+    return { type: 'error', message: 'Expired or invalid token' };
   }
 };
 
