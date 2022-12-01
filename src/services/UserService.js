@@ -6,7 +6,7 @@ const getUser = async (email, password) => {
     if (!user || user.password !== password) {
     return { type: 'error', message: 'Invalid fields' };
   }
-  const { password: _, ...userWithoutPassword } = user;
+  const { password: _, ...userWithoutPassword } = user.dataValues;
   const token = jwtFuncs.createToken(userWithoutPassword);
   return { type: null, message: token };
 };
