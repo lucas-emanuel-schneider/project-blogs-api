@@ -1,5 +1,6 @@
 const { BlogPost, PostCategory, User, Category } = require('../models');
 const { verifyCategoriesById } = require('./validations/categoriesValidation');
+const { validatePostUpdate } = require('./validations/validatePostUpdate');
 const jwtFuncs = require('../auth/jwtFunctions');
 
 const linkPostWithCategory = async (categoryIds, id) => {
@@ -36,11 +37,20 @@ const getPostById = async (id) => {
     { model: Category, as: 'categories', throught: { attributes: [] } }],
   });
   if (!post) return { type: 'error', message: 'Post does not exist' };
-  return { type: null, message: post };
+  return { type: null, message: post.dataValues };
+};
+
+const updatePost = async (idUser, idPost, updateContent) => {
+  const { type, message } = await validatePostUpdate(idPost, idUser);
+  if (type) return { type, message };
+  await BlogPost.update(updateContent, { where: { id: idPost } });
+  const response = await getPostById(idPost);
+  return { type: null, message: response.message };
 };
 
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
+  updatePost,
 };

@@ -22,9 +22,15 @@ const loginValidation = joi.object({
   categoryIds: joi.array().required().min(1),
 });
 
+const postUpdateValidation = joi.object({
+  title: joi.string().required(),
+  content: joi.string().required(),
+});
+
 module.exports = {
   loginValidation,
   userValidation,
   nameValidation,
   postValidation,
+  postUpdateValidation,
 };

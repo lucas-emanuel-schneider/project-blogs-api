@@ -1,4 +1,5 @@
 const blogPostServices = require('../services/BlogPostService');
+const { verifyToken } = require('../auth/jwtFunctions');
 
 const createPost = async (req, res) => {
   const { authorization: token } = req.headers;
@@ -18,8 +19,19 @@ const getPostById = async (req, res) => {
   res.status(200).json(message);
 };
 
+const updatePost = async (req, res) => {
+  const { authorization: token } = req.headers;
+  const tRes = verifyToken(token);
+  const { id } = req.params;
+  const content = req.body;
+  const { type, message } = await blogPostServices.updatePost(tRes.message.data.id, id, content);
+  if (type) return res.status(401).json({ message });
+  res.status(200).json(message);
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
+  updatePost,
 };
