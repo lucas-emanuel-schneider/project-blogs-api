@@ -1,4 +1,4 @@
-const { BlogPost, PostCategory } = require('../models');
+const { BlogPost, PostCategory, User, Category } = require('../models');
 const { verifyCategoriesById } = require('./validations/categoriesValidation');
 const jwtFuncs = require('../auth/jwtFunctions');
 
@@ -20,6 +20,16 @@ const createPost = async ({ title, content, categoryIds }, token) => {
   return { type: null, message: createdPost };
 };
 
+const getAllPosts = async () => {
+  const allPosts = await BlogPost.findAll({
+    include: [
+    { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', throught: { attributes: [] } }],
+  });
+  return allPosts;
+};
+
 module.exports = {
   createPost,
+  getAllPosts,
 };

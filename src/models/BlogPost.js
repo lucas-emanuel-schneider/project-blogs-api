@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   blogPost.associate = (models) => {
     blogPost.belongsTo(models.User, {
       foreignKey: 'userId',
-      as: 'User'
+      as: 'user'
     })
   }
   return blogPost;
