@@ -6,8 +6,7 @@ const getAllCategories = async () => {
 };
 
 const createNewCategory = async ({ name }) => {
-  const categoryAlreadyExists = await Category.findOne({
-    where: { name } });
+  const categoryAlreadyExists = await Category.findOne({ where: { name } });
   if (categoryAlreadyExists) return { type: 'error', message: 'category already exists' };
   const category = await Category.create({ name });
   return { type: null, message: category };
