@@ -48,9 +48,19 @@ const updatePost = async (idUser, idPost, updateContent) => {
   return { type: null, message: response.message };
 };
 
+const deletePostById = async (id, userId) => {
+  const verifyPost = await getPostById(id);
+  if (verifyPost.type) return { ...verifyPost, errorStatus: 404 };
+  const verifyUser = await validatePostUpdate(id, userId);
+  if (verifyUser.type) return { ...verifyUser, errorStatus: 401 };
+  await BlogPost.destroy({ where: { id } });
+  return { type: null, message: 'Post deleted', errorStatus: null };
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   updatePost,
+  deletePostById,
 };
