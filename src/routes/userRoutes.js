@@ -11,4 +11,6 @@ routers.get('/', validateToken, userController.getAllUsers);
 
 routers.get('/:id', validateToken, userController.getUserById);
 
+routers.delete('/me', validateToken, userController.deleteUserById);
+
 module.exports = routers;

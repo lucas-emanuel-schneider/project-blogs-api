@@ -1,4 +1,5 @@
 const userServices = require('../services/UserService');
+const { verifyToken } = require('../auth/jwtFunctions');
 
 const getUser = async (req, res) => {
   const { email, password } = req.body;
@@ -25,9 +26,17 @@ const getUserById = async (req, res) => {
   res.status(200).json(message);
 };
 
+const deleteUserById = async (req, res) => {
+  const { authorization: token } = req.headers;
+  const tRes = verifyToken(token);
+  await userServices.deleteUserById(tRes.message.data.id);
+  res.sendStatus(204);
+};
+
 module.exports = {
   getUser,
   createUser,
   getAllUsers,
   getUserById,
+  deleteUserById,
 };

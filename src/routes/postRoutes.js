@@ -6,6 +6,8 @@ const { validateUpdatePost } = require('../middlewares/validateUpdatePost');
 
 const routers = express.Router();
 
+routers.get('/search', validateToken, postController.searchPostsByContentAndTitle);
+
 routers.post('/', validateToken, validatePost, postController.createPost);
 
 routers.get('/', validateToken, postController.getAllPosts);

@@ -57,10 +57,19 @@ const deletePostById = async (id, userId) => {
   return { type: null, message: 'Post deleted', errorStatus: null };
 };
 
+const searchPostsByContentAndTitle = async (term) => {
+  const allPosts = await getAllPosts();
+  if (!term) return allPosts;
+  const filterByTermPosts = allPosts
+  .filter((post) => post.title.includes(term) || post.content.includes(term));
+  return filterByTermPosts;
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   updatePost,
   deletePostById,
+  searchPostsByContentAndTitle,
 };
