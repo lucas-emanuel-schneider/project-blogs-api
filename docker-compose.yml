@@ -17,7 +17,7 @@ services:
     # Substitui o comando padrão da imagem do node
     command: bash
     # Restarta a imagem caso algo a faça parar
-    restart: always
+    restart: on-failure
     # Diretório padrão de execução
     working_dir: /app
     # Lista de volumes (diretórios) mapeados de fora para dentro do container
@@ -52,7 +52,7 @@ services:
     image: mysql:8.0.23
     # Indica de forma fixa a plataforma na qual o banco irá rodar
     platform: linux/x86_64
-    restart: always
+    restart: on-failure
     ports:
       # Garanta que não haverá conflitos de porta com um banco que esteja
       # rodando localmente
